@@ -1,0 +1,246 @@
+// SISTEMA DE GERENCIAMENTO DE BIBLIOTECA 
+// DEFININDO BIBLIOTECAS 
+# include <iostream> 
+# include <string> 
+using namespace std;
+
+// DEFININDO STRUCT 
+struct Livros {
+    string titulo; 
+    string autor; 
+    int numero_de_paginas; 
+    int ano_de_publicacao; 
+    int id; 
+    int quantidade; 
+    string nome_pessoas; 
+}; 
+
+// FUNÇÃO PARA CADASTRAR LIVRO
+void cadastro_livros(Livros vetor[], int &cont) { // devo passar cont por referencia porque sempre estou atualizando o valor dele
+    // DEFININDO VARIÁVEIS
+    int  num;
+    char resposta, empres; 
+
+    // DEFININDO CONDIÇÕES
+    while (cont < 100) {
+        // PEDINDO INFORMAÇÕES 
+        cout << "Digite o titulo do livro: ";
+        cin >> vetor[cont].titulo; 
+
+        cout << "Digite o nome do autor: ";
+        cin >> vetor[cont].autor;
+
+        cout << "Digite o numero de paginas: ";
+        cin >> vetor[cont].numero_de_paginas;
+
+        cout << "Digite o ano de publicacao: ";
+        cin >> vetor[cont].ano_de_publicacao;
+
+        cout << "Digite o codigo de identificacao do livro: ";
+        cin >> vetor[cont].id;
+
+        cout << "Digite a quantidade disponivel (ate 10 unidades): ";
+        cin >> vetor[cont].quantidade;
+        if (vetor[cont].quantidade > 10){
+            while (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1) {
+                cout << "Quantidade invalida, digite novamente: ";
+                cin >> vetor[cont].quantidade;
+            }
+        }
+            
+        cout << "Deseja adicionar nomes na lista de emprestimo (S || N): ";
+        cin >> empres; 
+        
+        if (empres == 'S' || empres == 's'){
+            cout << "Quantas pessoas deseja adicionar na lista de emprestimo: ";
+            cin >> num;
+            while (num>0){
+                cout << "Digite o nome da pessoa que fez o emprestimo: ";
+                cin >> vetor[cont].nome_pessoas;
+                num--;
+            }
+        }
+        cont++;
+
+        cout << "Livro cadastrado com sucesso!" << endl;
+
+        cout << "Deseja cadastrar outro livro? (S || N): "; 
+        cin >> resposta;
+
+        if (resposta == 'n' || resposta == 'N') {
+            break;
+        }
+    }
+
+    if (cont == 100){
+        cout << "O limite de livros foi atingido!";
+    }
+}
+
+// FUNÇÃO PARA CONSULTAR OS LIVROS 
+void consultar_livro (Livros vetor[], int cont) { // devo passar cont como parametro porque preciso que as funções trabalhem com o valor mais recente de cont
+    // DEFININDO VARIÁVEIS 
+    int opcao;
+    int codigo_de_identificacao; 
+    string titulo_identificacao;
+    int i;
+
+    // MENU INTERATIVO
+    cout << "(1) Consultar todos os livros" << endl;
+    cout << "(2) Consultar por codigo de identificacao" << endl;
+    cout << "(3) Consultar pelo titulo" << endl;
+    cout << "(4) Remover cadastro de um livro" << endl;
+    cout << "Qual opcao deseja: " << endl;
+    cin >> opcao;
+
+    // DEFININDO CONDIÇÕES 
+    if (opcao == 1) {
+        for (i = 0; i < cont; i++) {
+            cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << std::endl;
+        }
+    }
+    if (opcao == 2) {
+        cout << "Digite o codigo de identificacao: "; 
+        cin >> codigo_de_identificacao; 
+
+        for (i = 0; i < cont; i++) {
+            if (codigo_de_identificacao == vetor[i].id) {
+                cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << endl;
+            }
+        }
+    }
+    if (opcao == 3) {
+        cout << "Digite o titulo: "; 
+        cin >> titulo_identificacao; 
+
+        for (i = 0; i < cont; i++) {
+            if (titulo_identificacao == vetor[i].titulo) {
+                cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << endl;
+            }
+        }
+    }
+}
+
+// FUNÇÃO PARA EMPRÉSTIMO 
+void emprestimo_livro (Livros vetor[], int cont) {
+    // DEFININDO VARIÁVEIS 
+    int codigo_de_identificacao;
+    bool livro_encontrado = false; // para verificar se o livro foi encontrado ou não, é definido inicialmente como falso
+    int i;
+
+    // PEDINDO CÓDIGO DE IDENTIFICAÇÃO
+    cout << "Digite o codigo de identificacao do livro para empretimo: ";
+    cin >> codigo_de_identificacao;
+
+    // DEFININDO CONDIÇÕES PARA O EMPRÉSTIMO
+    for (i = 0; i < cont; i++) {
+        if (codigo_de_identificacao == vetor[i].id) {
+            livro_encontrado = true; // livro foi encontrado, então o valor de livro_encontrado passa a ser verdadeiro
+            if (vetor[i].quantidade > 0) { // se a quantidade em estoque for maior que zero, o livro pode ser emprestado
+                cout << "Digite o nome da pessoa que está fazendo o emprestimo: ";
+                cin >> vetor[i].nome_pessoas; 
+                vetor[i].quantidade--; // diminuindo a quantidade de livros disponíveis 
+
+                cout << "Emprestimo realizado com sucesso!" << endl;
+                cout << "Quantidade restante: " << vetor[i].quantidade << endl;
+            }
+            else {
+                cout << "Livro indisponivel para emprestimo!" << endl;
+            }
+            break;
+        }
+    }
+
+    if (livro_encontrado == false) {
+        cout << "Livro nao encontrado!" << endl;
+    }
+}
+
+// FUNÇÃO PARA REALIZAR DEVOLUÇÃO 
+void devolucao_livro (Livros vetor[], int cont) {
+    // DEFININDO VARIÁVEIS 
+    int codigo_de_identificacao;
+    int i;
+
+    // PEDINDO INFORMAÇÕES PARA A DEVOLUÇÃO
+    cout << "Digite o codigo de identificacao do livro para devolucao: "; 
+    cin >> codigo_de_identificacao;
+
+    // DEFININDO CONDIÇÕES PARA A DEVOLUÇÃO
+    for (i = 0; i < cont; i++) {
+        if (codigo_de_identificacao == vetor[i].id) {
+            vetor[i].quantidade++; // incrementando mais um livro em quantidade 
+            cout << "Devolucao realizada com sucesso!" << endl;
+            cout << "Quantidade atual: " << vetor[i].quantidade << endl;
+            break;
+        }
+    }
+    cout << "Livro nao encontrado!";
+}
+
+// FUNÇÃO PARA REMOLVER LIVRO 
+void remover_livro (Livros vetor[], int cont) {
+    // DEFININDO VARIÁVEIS
+    int codigo_de_identificacao;
+    int i;
+
+    // PEDINDO CÓDIGO DE IDENTIFICAÇÃO PARA REMOLVER O LIVRO
+    cout << "Digite o codigo de identificacao do livro que deseja remolver: ";
+    cin >> codigo_de_identificacao;
+
+    bool livro_encontrado = false; // valor de bool é inicialmente false (o livro ainda não foi encontrado)    
+
+    // PROCURANDO LIVRO PARA SER REMOLVIDO 
+    for (i = 0; i < cont; i++) {
+        if (vetor[i].id == codigo_de_identificacao) {
+            livro_encontrado = true; // valor de bool é marcado como true
+            vetor[i] = vetor[cont - 1]; // o livro a ser removido é substituído pelo último livro do vetor
+            cont--; // o contador é decrementado, remolvendo o livro da ultima posição do vetor
+            cout << "Livro removido com sucesso!" << endl;
+            break;
+        }
+    }
+    if (livro_encontrado == false) {
+        cout << "Livro nao encontrado!" << endl;
+    }
+}
+
+int main() {
+    // DEFININDO VARIÁVEIS 
+    Livros vetor[100];
+    int escolha;
+    int cont = 0;
+
+    do {
+        // DEFININDO MENU INTERATIVO
+        cout << "\n Menu de opcoes: \n" << endl;
+        cout << "(1) Cadastro de livros " << endl;
+        cout << "(2) Consulta de livros " << endl;
+        cout << "(3) Emprestimo de livros " << endl; 
+        cout << "(4) Devolucao de livros " << endl;
+        cout << "(5) Remocao de livros " << endl; 
+        cout << "(6) Sair " << endl;
+        cout << "Qual opcao voce deseja: ";
+        cin >> escolha;
+
+        // CHAMNDO AS FUNÇÕES DE ACORDO COM A ESCOLHA DO USUÁRIO
+        switch (escolha) {
+            case 1: 
+            cadastro_livros(vetor, cont);
+            break;
+
+            case 2: 
+            consultar_livro(vetor, cont);
+            break;
+
+            case 6: 
+            std::cout << "Saindo do programa...";
+            break;
+
+            default: 
+            std::cout << "Essa opcao nao existe!";
+        }
+    } while (escolha != 6);
+
+    return 0; 
+}
