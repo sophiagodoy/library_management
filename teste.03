@@ -6,6 +6,7 @@ using namespace std;
 
 // DEFININDO STRUCT 
 struct Livros {
+    // ATRIBUTOS DO STRUCT LIVROS
     string titulo; 
     string autor; 
     int numero_de_paginas; 
@@ -22,7 +23,7 @@ void cadastro_livros(Livros vetor[], int &cont) {
     char emprestimo, continuar;
 
     do {
-        // PEDINDO INFORMAÇÕES
+        // PEDINDO INFORMAÇÕES DO LIVRO
         cout << "Digite o titulo do livro (use '_' para espacos): ";
         cin >> vetor[cont].titulo; 
 
@@ -38,18 +39,19 @@ void cadastro_livros(Livros vetor[], int &cont) {
         cout << "Digite o codigo de identificacao do livro: ";
         cin >> vetor[cont].id;
 
+        // DEFININDO QUANTIDADE DE LIVROS DISPONÍVEIS E VALIDANDO O VALOR ENTRE 1 E 10
         cout << "Digite a quantidade disponivel (ate 10 unidades): ";
         cin >> vetor[cont].quantidade; 
-        // DEFININDO CONSIÇÕES CASO A QUANTIDADE NÃO ESTEJA NO INTERVALO DE 1 E 10 
         while (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1) {
             cout << "Quantidade invalida, digite novamente: ";
             cin >> vetor[cont].quantidade;
         }
 
+        // VERIFICANDO SE DESEJA ADICIONAR NOMES DE PESSOAS QUE REALIZARAM EMPRÉSTIMO
         cout << "Deseja adicionar nomes na lista de emprestimo (S || N): ";
         cin >> emprestimo; 
 
-        // CONSIÇÃO PARA QUE SE O USUÁRIO QUISER ADICIONAR UM EMPRÉSTIMO 
+        // CASO A RESPOSTA SEJA SIM, ADICIONA OS NOMES NA LISTA DE EMPRÉSTIMO
         if (emprestimo == 'S' || emprestimo == 's') {
             cout << "Quantas pessoas deseja adicionar na lista de emprestimo: ";
             cin >> num;
@@ -60,8 +62,9 @@ void cadastro_livros(Livros vetor[], int &cont) {
             }
         } 
 
-        cont++; // conta que foi adicionado um livro 
+        cont++; // incrementa um livro no contador de livros
 
+        // PERGUNTA SE DESEJA CONTINUAR CADASTRO DE LIVROS
         cout << "Dejesa continuar inserindo um livro? (S || N): ";
         cin >> continuar; 
 
@@ -78,7 +81,7 @@ void consultar_livro (Livros vetor[], int cont) { // devo passar cont como param
     // VERIFICA SE NUNHUM LIVRO FOI CADASTRADO AINDA 
     if (cont == 0) {
         cout << "Nenhum livro foi cadastrado ainda!" << endl; 
-        return; // encerra a execução da função 
+        return; // encerra a função caso não haja livros cadastrados 
     }
 
     // DEFININDO VARIÁVEIS 
@@ -87,7 +90,7 @@ void consultar_livro (Livros vetor[], int cont) { // devo passar cont como param
     string titulo_identificacao;
     int i;
 
-    // MENU INTERATIVO
+    // MENU INTERATIVO PARA CONSULTAR LIVROS
     cout << "(1) Consultar todos os livros" << endl;
     cout << "(2) Consultar por codigo de identificacao" << endl;
     cout << "(3) Consultar pelo titulo" << endl;
@@ -95,29 +98,46 @@ void consultar_livro (Livros vetor[], int cont) { // devo passar cont como param
     cout << "Qual opcao deseja: " << endl;
     cin >> opcao;
 
+    // MOSTRA TODOS OS LIVROS CADASTRADOS 
     if (opcao == 1) {
         for (i = 0; i < cont; i++) {
             cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << std::endl;
         }
     }
+
+    // CONSULTA POR CÓDIGO DE IDENTIFICAÇÃO
     if (opcao == 2) {
+        bool livro_encontrado = false; 
         cout << "Digite o codigo de identificacao: "; 
         cin >> codigo_de_identificacao; 
-
         for (i = 0; i < cont; i++) {
             if (codigo_de_identificacao == vetor[i].id) {
                 cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << endl;
             }
         }
+        
+        // MENSAGEM DE LIVRO NÃO ENCONTRADO 
+        if (!livro_encontrado) {
+            cout << "Livro com o código de identificacao não exite!" << endl;
+        }
     }
+
+    // CONSULTA POR TÍTULO
     if (opcao == 3) {
+        bool livro_encontrado = false;
         cout << "Digite o titulo: "; 
         cin >> titulo_identificacao; 
-
         for (i = 0; i < cont; i++) {
             if (titulo_identificacao == vetor[i].titulo) {
                 cout << "Titulo: " << vetor[i].titulo  << ", autor: " << vetor[i].autor << ", numero de paginas: " << vetor[i].numero_de_paginas << ", ano de publicacao: " << vetor[i].ano_de_publicacao << ", ID: " << vetor[i].id << ", quantidade: " << vetor[i].quantidade << ", nome de pessoas que emprestou: " << vetor[i].nome_pessoas << endl;
+                livro_encontrado = true;
+                break;
             }
+        }
+
+        // MENSAGEM DE LIVRO NÃO ENCONTRADO
+        if (!livro_encontrado) {
+            cout << "Livro como o titulo não existe!" << endl;
         }
     }
 }
@@ -126,14 +146,14 @@ void consultar_livro (Livros vetor[], int cont) { // devo passar cont como param
 void emprestimo_livro (Livros vetor[], int cont) {
     // DEFININDO VARIÁVEIS 
     int codigo_de_identificacao;
-    bool livro_encontrado = false; // para verificar se o livro foi encontrado ou não, é definido inicialmente como falso
+    bool livro_encontrado = false; // verifica se o livro foi encontrado ou não
     int i;
 
-    // PEDINDO CÓDIGO DE IDENTIFICAÇÃO
+    // SOLICITA CÓDIGO DE IDENTIFICAÇÃO
     cout << "Digite o codigo de identificacao do livro para empretimo: ";
     cin >> codigo_de_identificacao;
 
-    // DEFININDO CONDIÇÕES PARA O EMPRÉSTIMO
+    // VERIFICA SE O LIVRO PODE SER EMPRESTADO 
     for (i = 0; i < cont; i++) {
         if (codigo_de_identificacao == vetor[i].id) {
             livro_encontrado = true; // livro foi encontrado, então o valor de livro_encontrado passa a ser verdadeiro
@@ -141,7 +161,6 @@ void emprestimo_livro (Livros vetor[], int cont) {
                 cout << "Digite o nome da pessoa que está fazendo o emprestimo: ";
                 cin >> vetor[i].nome_pessoas; 
                 vetor[i].quantidade--; // diminuindo a quantidade de livros disponíveis 
-
                 cout << "Emprestimo realizado com sucesso!" << endl;
                 cout << "Quantidade restante: " << vetor[i].quantidade << endl;
             }
@@ -152,6 +171,7 @@ void emprestimo_livro (Livros vetor[], int cont) {
         }
     }
 
+    // MENSAGEM DE LIVRO NÃO ENCONTRADO 
     if (!livro_encontrado) {
         cout << "Livro nao encontrado!" << endl;
     }
@@ -163,11 +183,11 @@ void devolucao_livro (Livros vetor[], int cont) {
     int codigo_de_identificacao;
     int i;
 
-    // PEDINDO INFORMAÇÕES PARA A DEVOLUÇÃO
+    // SOLICITA O CÓDIGO DE IDENTIFICAÇÃO DO LIVRO PARA DEVOLUÇÃO
     cout << "Digite o codigo de identificacao do livro para devolucao: "; 
     cin >> codigo_de_identificacao;
 
-    // DEFININDO CONDIÇÕES PARA A DEVOLUÇÃO
+    // INCREMENTA A QUANTIDADE DO LIVRO AO SER DEVOLVIDO 
     for (i = 0; i < cont; i++) {
         if (codigo_de_identificacao == vetor[i].id) {
             vetor[i].quantidade++; // incrementando mais um livro em quantidade 
@@ -185,13 +205,13 @@ void remover_livro (Livros vetor[], int cont) {
     int codigo_de_identificacao;
     int i;
 
-    // PEDINDO CÓDIGO DE IDENTIFICAÇÃO PARA REMOLVER O LIVRO
+    // SOLICITA O CÓDIGO DE IDENTIFICAÇÃO PARA REMOÇÃO
     cout << "Digite o codigo de identificacao do livro que deseja remolver: ";
     cin >> codigo_de_identificacao;
 
     bool livro_encontrado = false; // valor de bool é inicialmente false (o livro ainda não foi encontrado)    
 
-    // PROCURANDO LIVRO PARA SER REMOLVIDO 
+    // PROCURA O LIVRO PARA REMOVÊ-LO
     for (i = 0; i < cont; i++) {
         if (vetor[i].id == codigo_de_identificacao) {
             livro_encontrado = true; // valor de bool é marcado como true
@@ -201,6 +221,8 @@ void remover_livro (Livros vetor[], int cont) {
             break;
         }
     }
+
+    // CASO O LIVRO NÃO TENHA SIDO ENCONTRADO 
     if (!livro_encontrado) { // se bool for false 
         cout << "Livro nao encontrado!" << endl;
     }
@@ -213,7 +235,7 @@ int main() {
     int cont = 0;
 
     do {
-        // DEFININDO MENU INTERATIVO
+        // MENU INTERATIVO
         cout << " \n Menu de opcoes: " << endl;
         cout << "(1) Cadastro de livros " << endl;
         cout << "(2) Consulta de livros " << endl;
@@ -224,24 +246,37 @@ int main() {
         cout << "Qual opcao voce deseja: ";
         cin >> escolha;
 
-        // CHAMNDO AS FUNÇÕES DE ACORDO COM A ESCOLHA DO USUÁRIO
+        // CHAMANDO AS FUNÇÕES BASEADO NA ESCOLHA DO USUÁRIO
         switch (escolha) {
             case 1: 
-            cadastro_livros(vetor, cont);
-            break;
+                cadastro_livros(vetor, cont);  
+                break;
 
             case 2: 
-            consultar_livro(vetor, cont);
-            break;
+                consultar_livro(vetor, cont);  
+                break;
+
+            case 3:
+                emprestimo_livro(vetor, cont);  
+                break;
+
+            case 4:
+                devolucao_livro(vetor, cont);  
+                break;
+
+            case 5:
+                remover_livro(vetor, cont);  
+                break;
 
             case 6: 
-            std::cout << "Saindo do programa...";
-            break;
+                cout << "Saindo do programa..." << endl;  
+                break;
 
             default: 
-            std::cout << "Essa opcao nao existe!";
+                cout << "Essa opcao nao existe!" << endl;  
         }
-    } while (escolha != 6);
+
+    } while (escolha != 6);  
 
     return 0; 
 }
