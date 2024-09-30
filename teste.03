@@ -19,7 +19,7 @@ struct Livros {
 // FUNÇÃO PARA CADASTRAR LIVRO
 void cadastro_livros(Livros vetor[], int &cont) {
     // DEFININDO VARIÁVEIS
-    int num;
+    int num, i;
     char emprestimo, continuar;
 
     do {
@@ -36,9 +36,24 @@ void cadastro_livros(Livros vetor[], int &cont) {
         cout << "Digite o ano de publicacao: ";
         cin >> vetor[cont].ano_de_publicacao;
 
-        cout << "Digite o codigo de identificacao do livro: ";
-        cin >> vetor[cont].id;
+        // VERIFICANDO SE O CÓDIGO JÁ EXISTE
+        bool codigo_existe = false;
+        do {
+            cout << "Digite o codigo de identificacao do livro: ";
+            cin >> vetor[cont].id;
 
+            // ERIFICANDO SE O CÓDIGO JÁ EXISTE 
+            for (int i = 0; i < cont; i++) {
+                if (vetor[i].id == vetor[cont].id) {
+                    cout << "O código de identificação ja existe! Digite um novo codigo." << endl;
+                    codigo_existe = true;
+                    break;
+                } else {
+                    codigo_existe = false;
+                }
+            }
+        } while (codigo_existe); // repete até que um código único seja inserido
+        
         // DEFININDO QUANTIDADE DE LIVROS DISPONÍVEIS E VALIDANDO O VALOR ENTRE 1 E 10
         cout << "Digite a quantidade disponivel (ate 10 unidades): ";
         cin >> vetor[cont].quantidade; 
