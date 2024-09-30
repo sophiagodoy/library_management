@@ -144,6 +144,12 @@ void consultar_livro (Livros vetor[], int cont) { // devo passar cont como param
 
 // FUNÇÃO PARA EMPRÉSTIMO 
 void emprestimo_livro (Livros vetor[], int cont) {
+    // VERIFICA SE NUNHUM LIVRO FOI CADASTRADO AINDA 
+    if (cont == 0) {
+        cout << "Nenhum livro cadastrado ainda! Nao e possivel realizar o emprestimo!" << endl;
+        return; 
+    }
+
     // DEFININDO VARIÁVEIS 
     int codigo_de_identificacao;
     bool livro_encontrado = false; // verifica se o livro foi encontrado ou não
@@ -179,6 +185,12 @@ void emprestimo_livro (Livros vetor[], int cont) {
 
 // FUNÇÃO PARA REALIZAR DEVOLUÇÃO 
 void devolucao_livro (Livros vetor[], int cont) {
+    // VERIFICA SE NUNHUM LIVRO FOI CADASTRADO AINDA 
+    if (cont == 0) {
+        cout << "Nenhum livro cadastrado ainda! Nao e possivel realizar a devolucao!" << endl;
+        return; 
+    }
+
     // DEFININDO VARIÁVEIS 
     int codigo_de_identificacao;
     int i;
@@ -201,6 +213,12 @@ void devolucao_livro (Livros vetor[], int cont) {
 
 // FUNÇÃO PARA REMOLVER LIVRO 
 void remover_livro (Livros vetor[], int cont) {
+    // VERIFICA SE NUNHUM LIVRO FOI CADASTRADO AINDA 
+    if (cont == 0) {
+        cout << "Nenhum livro cadastrado ainda! Nao e possivel remover!" << endl;
+        return; 
+    }
+
     // DEFININDO VARIÁVEIS
     int codigo_de_identificacao;
     int i;
