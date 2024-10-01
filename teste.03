@@ -303,7 +303,7 @@ void remover_livro (Livros vetor[], int &cont) { // valor de cont deve ser atual
             vetor[i] = vetor[cont - 1]; // o livro a ser removido é substituído pelo último livro do vetor
             cont--; // o contador é decrementado, remolvendo o livro da ultima posição do vetor
             cout << "Livro removido com sucesso!" << endl;
-            cout << "Titulo: " << vetor[i].titulo << ", Autor: " << vetor[i].autor << endl;
+            cout << "Titulo: " << vetor[cont - 1].titulo << ", Autor: " << vetor[cont - 1].autor << endl; // exibe informações do último livro
             break;
         }
     }
