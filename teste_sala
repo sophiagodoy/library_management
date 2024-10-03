@@ -18,76 +18,81 @@ struct Livros {
 
 // FUNÇÃO PARA CADASTRO DE LIVROS
 void cadastro_livros(Livros vetor[], int &cont) {
-    // DEFININDO VARIÁVEIS
-    int num;
-    char continuar;
+  // DEFININDO VARIÁVEIS
+  int num;
+  char emprestimo, continuar;
 
+  do {
+    // PEDINDO INFORMAÇÕES DO LIVRO
+    cout << "Digite o titulo do livro (use '_' para espacos): ";
+    cin >> vetor[cont].titulo;
+
+    cout << "Digite o nome do autor (use '_' para espacos): ";
+    cin >> vetor[cont].autor;
+
+    // Validando o número de páginas
     do {
-        // PEDINDO INFORMAÇÕES DO LIVRO
-        cout << "Digite o titulo do livro (use '_' para espacos): ";
-        cin >> vetor[cont].titulo;
+      cout << "Digite o numero de paginas: ";
+      cin >> vetor[cont].numero_de_paginas;
+      if (vetor[cont].numero_de_paginas <= 0) {
+        cout << "Numero de paginas invalido. Deve ser maior que zero." << endl;
+      }
+    } while (vetor[cont].numero_de_paginas <=
+             0); // Repetir enquanto for inválido
 
-        cout << "Digite o nome do autor (use '_' para espacos): ";
-        cin >> vetor[cont].autor;
+    // Validando o ano de publicação
+    do {
+      cout << "Digite o ano de publicacao: ";
+      cin >> vetor[cont].ano_de_publicacao;
+      if (vetor[cont].ano_de_publicacao <= 0) {
+        cout << "Ano de publicação inválido. Deve ser um número positivo."
+             << endl;
+      }
+    } while (vetor[cont].ano_de_publicacao <=
+             0); // Repetir enquanto for inválido
 
-        // Validando o número de páginas
-        do {
-            cout << "Digite o numero de paginas: ";
-            cin >> vetor[cont].numero_de_paginas;
-            if (vetor[cont].numero_de_paginas <= 0) {
-                cout << "Numero de paginas invalido. Deve ser maior que zero." << endl;
-            }
-        } while (vetor[cont].numero_de_paginas <= 0); // Repetir enquanto for inválido
+    // VERIFICANDO SE O CÓDIGO JÁ EXISTE
+    bool codigo_existe = false;
+    do {
+      cout << "Digite o codigo de identificacao do livro: ";
+      cin >> vetor[cont].id;
 
-        // Validando o ano de publicação
-        do {
-            cout << "Digite o ano de publicacao: ";
-            cin >> vetor[cont].ano_de_publicacao;
-            if (vetor[cont].ano_de_publicacao <= 0) {
-                cout << "Ano de publicação inválido. Deve ser um número positivo." << endl;
-            }
-        } while (vetor[cont].ano_de_publicacao <= 0); // Repetir enquanto for inválido
-
-        // VERIFICANDO SE O CÓDIGO JÁ EXISTE
-        bool codigo_existe = false;
-        do {
-            cout << "Digite o codigo de identificacao do livro: ";
-            cin >> vetor[cont].id;
-
-            // VERIFICANDO SE O CÓDIGO JÁ EXISTE
-            for (int i = 0; i < cont; i++) {
-                if (vetor[i].id == vetor[cont].id) {
-                    cout << "O código de identificação já existe! Digite um novo codigo." << endl;
-                    codigo_existe = true;
-                    break;
-                } else {
-                    codigo_existe = false;
-                }
-            }
-        } while (codigo_existe); // repete até que um código único seja inserido
-
-        // DEFININDO QUANTIDADE DE LIVROS DISPONÍVEIS E VALIDANDO O VALOR ENTRE 1 E 10
-        do {
-            cout << "Digite a quantidade disponivel (ate 10 unidades): ";
-            cin >> vetor[cont].quantidade;
-            if (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1) {
-                cout << "Quantidade invalida, digite novamente: ";
-            }
-        } while (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1);
-
-        cont++; // incrementa um livro no contador de livros
-
-        // PERGUNTA SE DESEJA CONTINUAR CADASTRO DE LIVROS
-        cout << "Deseja continuar inserindo um livro? (S || N): ";
-        cin >> continuar;
-
-        if (continuar == 'N' || continuar == 'n') {
-            cout << "Livro cadastrado com sucesso!" << endl;
+      // VERIFICANDO SE O CÓDIGO JÁ EXISTE
+      for (int i = 0; i < cont; i++) {
+        if (vetor[i].id == vetor[cont].id) {
+          cout << "O código de identificação ja existe! Digite um novo codigo."
+               << endl;
+          codigo_existe = true;
+          break;
+        } else {
+          codigo_existe = false;
         }
+      }
+    } while (codigo_existe); // repete até que um código único seja inserido
 
-    } while (continuar == 'S' || continuar == 's');
+    // DEFININDO QUANTIDADE DE LIVROS DISPONÍVEIS E VALIDANDO O VALOR ENTRE 1 E
+    // 10
+    do {
+      cout << "Digite a quantidade disponivel (ate 10 unidades): ";
+      cin >> vetor[cont].quantidade;
+      if (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1) {
+        cout << "Quantidade invalida, digite novamente: ";
+      }
+    } while (vetor[cont].quantidade > 10 || vetor[cont].quantidade < 1);
+
+
+    cont++; // incrementa um livro no contador de livros
+
+    // PERGUNTA SE DESEJA CONTINUAR CADASTRO DE LIVROS
+    cout << "Dejesa continuar inserindo um livro? (S || N): ";
+    cin >> continuar;
+
+    if (continuar == 'N' || continuar == 'n') {
+      cout << "Livro cadastrado com sucesso!" << endl;
+    }
+
+  } while (continuar == 'S' || continuar == 's');
 }
-
 
 // FUNÇÃO PARA CONSULTAR OS LIVROS
 void consultar_livro(Livros vetor[], int cont) {
