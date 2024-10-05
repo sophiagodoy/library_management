@@ -29,25 +29,25 @@ void cadastro_livros(Livros vetor[], int &cont) {
     cout << "Digite o nome do autor (use '_' para espacos): ";
     cin >> vetor[cont].autor; // LÊ O NOME DO AUTOR
 
-    // Validando o número de páginas
+    // VALIDANDO O NÚMERO DE PÁGINAS
     do {
         cout << "Digite o numero de paginas: ";
         cin >> vetor[cont].numero_de_paginas; // LÊ O NÚMERO DE PÁGINAS
         if (vetor[cont].numero_de_paginas <= 0) {
             cout << "Numero de paginas invalido. Deve ser maior que zero." << endl; // MENSAEM DE ERRO
         }
-    } while (vetor[cont].numero_de_paginas <= 0); // Repetir enquanto for inválido
+    } while (vetor[cont].numero_de_paginas <= 0); // REPETIR ENQUANTO FOR INVÁLIDO 
 
-    // Validando o ano de publicação
+    // VALIDANDO O ANO DE PUBLICAÇÃO
     do {
         cout << "Digite o ano de publicacao: ";
         cin >> vetor[cont].ano_de_publicacao; // LÊ O ANO DE PUBLICAÇÃO
         if (vetor[cont].ano_de_publicacao <= 0) {
             cout << "Ano de publicação inválido. Deve ser um número positivo." << endl; // MENSAEM DE ERRO
         }
-    } while (vetor[cont].ano_de_publicacao <= 0); // Repetir enquanto for inválido
+    } while (vetor[cont].ano_de_publicacao <= 0); // REPETIR ENQUANTO FOR INVÁLIDO 
 
-    // VERIFICANDO SE O CÓDIGO JÁ EXISTE
+    // VERIFICANDO SE O CÓDIGO DE IDENTIFICAÇÃO JÁ EXISTE
     bool codigo_existe = false;
     do {
         cout << "Digite o codigo de identificacao do livro: ";
@@ -63,7 +63,7 @@ void cadastro_livros(Livros vetor[], int &cont) {
                 codigo_existe = false; // CÓDIGO NÃO EXISTE
             }
         }
-    } while (codigo_existe); // repete até que um código único seja inserido
+    } while (codigo_existe); // REPETE ATÉ UM CÓDIGO ÚNICO SEJA INSERIDO
 
     // DEFININDO QUANTIDADE DE LIVROS DISPONÍVEIS E VALIDANDO O VALOR ENTRE 1 E 10
     do {
@@ -87,8 +87,8 @@ void cadastro_livros(Livros vetor[], int &cont) {
 void consultar_livro(Livros vetor[], int cont) {
   // VERIFICA SE NENHUM LIVRO FOI CADASTRADO AINDA
   if (cont == 0) {
-    cout << "Nenhum livro foi cadastrado ainda!" << endl; // MENSAEM SE NENHUM LIVRO ESTIVER CADASTRADO
-    return; // Encerra a função caso não haja livros cadastrados
+    cout << "Nenhum livro foi cadastrado ainda!" << endl; // MENSAGEM SE NENHUM LIVRO ESTIVER CADASTRADO
+    return; // ENCERRA A FUNÇÃO CASO NÃO HAJA LIVROS CADASTRADOS
   }
 
   // DEFININDO VARIÁVEIS
@@ -135,7 +135,7 @@ void consultar_livro(Livros vetor[], int cont) {
   }
   // CONSULTA POR CÓDIGO DE IDENTIFICAÇÃO
   else if (opcao == 2) {
-    bool livro_encontrado = false; // FLAG PARA LIVRO ENCONTRADO
+    bool livro_encontrado = false; 
     cout << "Digite o código de identificação: ";
     cin >> codigo_de_identificacao; // LÊ O CÓDIGO DE IDENTIFICAÇÃO
     for (int i = 0; i < cont; i++) {
@@ -170,7 +170,7 @@ void consultar_livro(Livros vetor[], int cont) {
   }
   // CONSULTA POR TÍTULO
   else if (opcao == 3) {
-    bool livro_encontrado = false; // FLAG PARA LIVRO ENCONTRADO
+    bool livro_encontrado = false; 
     cout << "Digite o título do livro (use '_' para espacos): ";
     cin >> titulo_identificacao; // LÊ O TÍTULO DO LIVRO
     for (int i = 0; i < cont; i++) {
