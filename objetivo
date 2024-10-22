@@ -1,5 +1,0 @@
-O código implementa um sistema de gerenciamento de biblioteca que permite:
-- Cadastro de Livros: Adicionar novos livros com informações detalhadas, garantindo validações.
-- Consulta de Livros: Listar todos os livros ou buscar por título/código.
-- Empréstimo de Livros: Registrar o empréstimo de livros, atualizando a quantidade disponível e o nome do usuário.
-- Devolução de Livros: Embora mencionada, essa funcionalidade não foi implementada no trecho fornecido.
