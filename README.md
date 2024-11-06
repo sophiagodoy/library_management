@@ -1,26 +1,26 @@
-# SISTEMA DE GERENCIAMENTO DE BIBLIOTECA 
+# Library Management System
 
-Este projeto é um sistema de gerenciamento de biblioteca implementado em C++, que permite cadastrar, consultar, emprestar, devolver e remover livros. O programa funciona através de um menu interativo, onde o usuário pode selecionar diferentes opções para gerenciar o acervo de livros.
+This project is a library management system implemented in C++, which allows for registering, consulting, borrowing, returning, and removing books. The program works through an interactive menu, where the user can select different options to manage the book collection.
 
-## Funcionalidades
+## Features
 
-O sistema possui as seguintes funcionalidades:
+The system includes the following features:
 
-1. **Cadastrar Livro**: Permite o cadastro de um novo livro, fornecendo informações como:
-   - Título
-   - Autor
-   - Número de páginas
-   - Ano de publicação
-   - Código de identificação (único)
-   - Quantidade de exemplares disponíveis (até 10)
+1. **Register Book**: Allows the registration of a new book by providing information such as:
+   - Title
+   - Author
+   - Number of pages
+   - Year of publication
+   - Unique identification code
+   - Available copies (up to 10)
 
-2. **Consultar Livro**: Permite consultar os livros cadastrados de três maneiras:
-   - Listar todos os livros.
-   - Consultar por código de identificação.
-   - Consultar por título.
+2. **Consult Book**: Allows consulting registered books in three ways:
+   - List all books.
+   - Search by identification code.
+   - Search by title.
 
-3. **Emprestar Livro**: Registra o empréstimo de um livro, associando o nome da pessoa que o pegou emprestado. Só é possível emprestar um livro se houver exemplares disponíveis.
+3. **Borrow Book**: Registers the borrowing of a book by associating the name of the person who borrowed it. A book can only be borrowed if there are available copies.
 
-4. **Devolver Livro**: Permite devolver um livro, removendo o nome da pessoa que realizou o empréstimo e aumentando o número de exemplares disponíveis.
+4. **Return Book**: Allows returning a book, removing the borrower's name and increasing the number of available copies.
 
-5. **Remover Livro**: Remove um livro do sistema com base no seu código de identificação.
+5. **Remove Book**: Removes a book from the system based on its identification code.
